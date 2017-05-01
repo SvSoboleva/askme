@@ -25,6 +25,14 @@ class User < ApplicationRecord
 
   before_save :encrypt_password
 
+#домашка 49-2 begin
+  before_validation :username_downcase
+
+  def username_downcase
+    self.username.downcase!
+  end
+#домашка 49-2 end
+
   def encrypt_password
     if self.password.present?
       self.password_salt = User.hash_to_string(OpenSSL::Random.random_bytes(16))
