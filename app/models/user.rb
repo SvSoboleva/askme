@@ -1,19 +1,27 @@
 require 'openssl'
 
 class User < ApplicationRecord
+  attr_accessor :password
+
+  has_many :questions
+
   #параметры для паролей
   ITERATIONS = 20000
   DIGEST = OpenSSL::Digest::SHA256.new
 
-  has_many :questions
-
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
 
-  attr_accessor :password
-
   validates_presence_of :password, on: :create
   validates_confirmation_of :password
+
+#домашка 49-1 begin
+  validates_format_of :email, :with => /\A^[a-z\d_+.\-]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+$\Z/i,
+                      :message => 'Неверный формат email'
+
+  validates_format_of :username, :with => /\A^[\w_]+$\Z/i, :message => 'Используйте только латинские буквы, цифры и _'
+  validates_length_of :username, :maximum => 40, :message => 'максимум 40 символов'
+#домашка 49-1 end
 
   before_save :encrypt_password
 
