@@ -16,11 +16,11 @@ class User < ApplicationRecord
   validates_confirmation_of :password
 
 #домашка 49-1 begin
-  validates_format_of :email, :with => /\A^[a-z\d_+.\-]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+$\Z/i,
-                      :message => 'Неверный формат email'
+  validates_format_of :email, with: /\A^[a-z\d_+.\-]+@[[:word:]\-]+(\.[[:word:]\-]+)*\.[[:word:]]{2,4}$\Z/i,
+                      message: 'Неверный формат email'
 
-  validates_format_of :username, :with => /\A^[\w_]+$\Z/i, :message => 'Используйте только латинские буквы, цифры и _'
-  validates_length_of :username, :maximum => 40, :message => 'максимум 40 символов'
+  validates_format_of :username, with: /\A^[\w]+$\Z/i, message: 'Используйте только латинские буквы, цифры и _'
+  validates_length_of :username, maximum: 40, message: 'максимум 40 символов'
 #домашка 49-1 end
 
   before_save :encrypt_password
