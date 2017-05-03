@@ -48,6 +48,13 @@
 <%# Блок со списком вопросов к пользователю %>
 <div class="column-3-4">
   <div class="user-questions buffer-both">
+
+<%#домашка 50-1 begin %>
+    <div class="questions_amount">
+      <%= "Всего #{@questions.count} #{sklonenie(@questions.count, 'вопрос', 'вопроса', 'вопросов')}" %>
+    </div>
+<%#домашка 50-1 end %>
+
     <div class="questions-list">
       <% @questions.each do |question| %>
           <%= render partial: 'questions/question', object: question %>

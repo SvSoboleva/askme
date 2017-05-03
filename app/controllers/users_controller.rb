@@ -25,13 +25,15 @@ class UsersController < ApplicationController
   def show
     @user = User.new(
       name: 'Vadim',
-      username: 'inst',
+      username: 'installero',
       avatar_url: ''
     )
 
     @questions =[
       Question.new(text: 'Как дела?', created_at: Date.parse('03.05.2017')),
-      Question.new(text: 'Как погода?', created_at: Date.parse('03.05.2017'))
+      Question.new(text: 'Как погода?', created_at: Date.parse('03.05.2017')),
+      Question.new(text: 'Который час?', created_at: Date.parse('03.05.2017')),
+      Question.new(text: 'Как настроение?', created_at: Date.parse('03.05.2017'))
     ]
 
     @new_question = Question.new
