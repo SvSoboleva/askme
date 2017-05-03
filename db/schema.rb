@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20170502171859) do
     t.string   "password_hash"
     t.string   "password_salt"
     t.string   "avatar_url"
-    t.index ["username"], name: "index_users_on_username"
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
 end
