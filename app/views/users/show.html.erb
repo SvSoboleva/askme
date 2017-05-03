@@ -51,7 +51,7 @@
 
 <%#домашка 50-1 begin %>
     <div class="questions_amount">
-      <%= "Всего #{@questions.count} #{sklonenie(@questions.count, 'вопрос', 'вопроса', 'вопросов')}" %>
+      <%= "Всего #{@questions.count} #{sklonenie(@questions.count, t('one'), t('few'), t('many'))}" %>
     </div>
 <%#домашка 50-1 end %>
 
