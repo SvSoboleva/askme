@@ -15,23 +15,17 @@ class User < ApplicationRecord
   validates_presence_of :password, on: :create
   validates_confirmation_of :password
 
-#домашка 49-1 begin
-  validates_format_of :email, with: /\A[a-z\d_+.\-]+@[[:word:]\-]+(\.[[:word:]\-]+)*\.[[:word:]]{2,4}\Z/i,
-                      message: 'Неверный формат email'
-
+  validates_format_of :email, with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates_format_of :username, with: /\A\w+\Z/i, message: 'Используйте только латинские буквы, цифры и _'
-  validates_length_of :username, maximum: 40, message: 'максимум 40 символов'
-#домашка 49-1 end
+  validates_length_of :username, maximum: 40
 
   before_save :encrypt_password
 
-#домашка 49-2 begin
   before_validation :username_downcase
 
   def username_downcase
     self.username.downcase!
   end
-#домашка 49-2 end
 
   def encrypt_password
     if self.password.present?
