@@ -1,5 +1,13 @@
 ru:
   question:
-    one: "вопрос"
-    few: "вопроса"
-    many: "вопросов"
+    one: вопрос
+    few: вопроса
+    many: вопросов
+  answer:
+      one: ответ
+      few: ответа
+      many: ответов
+  unanswered:
+        one: безответный
+        few: безответных
+        many: безответных
