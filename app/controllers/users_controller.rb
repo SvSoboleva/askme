@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   # Это действие отзывается, когда пользователь заходит по адресу /users
   before_action :load_user, except: [:index, :new, :create]
   before_action :authorize_user, except: [:index, :new, :create, :show]
+  before_action :user_background, except: [:index, :new, :create, :update]
 
   def index
     @users = User.all
@@ -24,7 +25,6 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @default_color = default_background
   end
 
   def update
@@ -41,7 +41,6 @@ class UsersController < ApplicationController
     @questions_count = @questions.count
     @answers_count = @questions.where.not(answer: nil).count
     @unanswered_count = @questions_count - @answers_count
-    @user_background = (@user.background_color || default_background)
   end
 
   private
@@ -53,8 +52,8 @@ class UsersController < ApplicationController
     @user ||= User.find params[:id]
   end
 
-  def default_background
-    '#005a55'
+  def user_background
+    @user_background = @user.background_color || '#005a55'
   end
 
   def user_params
