@@ -24,6 +24,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @default_color = default_background
   end
 
   def update
@@ -40,6 +41,7 @@ class UsersController < ApplicationController
     @questions_count = @questions.count
     @answers_count = @questions.where.not(answer: nil).count
     @unanswered_count = @questions_count - @answers_count
+    @user_background = (@user.background_color || default_background)
   end
 
   private
@@ -51,7 +53,12 @@ class UsersController < ApplicationController
     @user ||= User.find params[:id]
   end
 
+  def default_background
+    '#005a55'
+  end
+
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :name, :username, :avatar_url)
+    params.require(:user).permit(
+        :email, :password, :password_confirmation, :name, :username, :avatar_url, :background_color)
   end
 end
