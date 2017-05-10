@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   # Это действие отзывается, когда пользователь заходит по адресу /users
   before_action :load_user, except: [:index, :new, :create]
+  before_action :load_questions, only: [:destroy, :show]
   before_action :authorize_user, except: [:index, :new, :create, :show]
   before_action :user_background, except: [:index, :new, :create, :update]
 
@@ -36,11 +37,19 @@ class UsersController < ApplicationController
   end
 
   def show
-    @questions = @user.questions.order(created_at: :desc)
     @new_question = @user.questions.build
     @questions_count = @questions.count
     @answers_count = @questions.where.not(answer: nil).count
     @unanswered_count = @questions_count - @answers_count
+  end
+
+  def destroy
+    if @questions
+      @questions.destroy_all(user: @user)
+    end
+    @user.destroy
+    session[:user_id] = nil
+    redirect_to root_url, notice: "Аккаунт  #{@user.name} успешно удален"
   end
 
   private
@@ -50,6 +59,10 @@ class UsersController < ApplicationController
 
   def load_user
     @user ||= User.find params[:id]
+  end
+
+  def load_questions
+    @questions = @user.questions.order(created_at: :desc)
   end
 
   def user_background
