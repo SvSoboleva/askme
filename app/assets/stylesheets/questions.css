@@ -19,7 +19,8 @@
   margin-bottom: 10px;
 }
 
-.question-text {
+.question-text,
+.question_author{
   color: #005a55;
 }
 

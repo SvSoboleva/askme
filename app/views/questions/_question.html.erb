@@ -7,6 +7,12 @@
     <%# Текст вопроса %>
     <div class="question-text text-lead">
       <%= question.text %>
+      <div class="question_author">
+        <% if question.author %>
+          <%= link_to "@#{User.find_by(id: question.author_id).username}",
+                      user_path(User.find_by(id: question.author_id)) %>
+        <% end %>
+      </div>
     </div>
 
     <%# Текст ответа, если он есть %>
