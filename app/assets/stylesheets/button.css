@@ -29,3 +29,10 @@
   line-height: 15px;
   padding: 7px 15px;
 }
+
+.button-link {
+  font-size: 13px;
+  float: right;
+  line-height: 15px;
+  padding: 7px 15px;
+}

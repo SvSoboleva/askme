@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   before_action :load_user, except: [:index, :new, :create]
   before_action :load_questions, only: [:destroy, :show]
   before_action :authorize_user, except: [:index, :new, :create, :show]
-  before_action :user_background, except: [:index, :new, :create, :update]
 
   def index
     @users = User.all
@@ -44,9 +43,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if @questions
-      @questions.destroy_all(user: @user)
-    end
+    Question.where(user: @user).delete_all
     @user.destroy
     session[:user_id] = nil
     redirect_to root_url, notice: "Аккаунт  #{@user.name} успешно удален"
@@ -63,10 +60,6 @@ class UsersController < ApplicationController
 
   def load_questions
     @questions = @user.questions.order(created_at: :desc)
-  end
-
-  def user_background
-    @user_background = @user.background_color || '#005a55'
   end
 
   def user_params
