@@ -3,7 +3,7 @@ require 'openssl'
 class User < ApplicationRecord
   attr_accessor :password
 
-  has_many :questions
+  has_many :questions, dependent: :destroy
 
   #параметры для паролей
   ITERATIONS = 20000

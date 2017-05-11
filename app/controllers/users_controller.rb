@@ -43,7 +43,6 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    Question.where(user: @user).delete_all
     @user.destroy
     session[:user_id] = nil
     redirect_to root_url, notice: "Аккаунт  #{@user.name} успешно удален"
