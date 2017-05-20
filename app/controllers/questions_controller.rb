@@ -1,11 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :load_question, only: [:edit, :update, :destroy]
-  before_action :load_tag_questions, only: [:index]
-  before_action :authorize_user, except: [:create, :index]
-
-
-  def index
-  end
+  before_action :authorize_user, except: [:create]
 
   # GET /questions/1/edit
   def edit
@@ -16,6 +11,7 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params)
     @question.author = current_user
     if @question.save
+      create_tag(@question)
       redirect_to user_path(@question.user), notice: 'Вопрос задан'
     else
       render :edit
@@ -25,6 +21,7 @@ class QuestionsController < ApplicationController
   # PATCH/PUT /questions/1
   def update
     if @question.update(question_params)
+      create_tag(@question)
       redirect_to user_path(@question.user), notice: 'Вопрос сохранен'
     else
       render :edit
@@ -38,7 +35,9 @@ class QuestionsController < ApplicationController
     redirect_to user_path(user), notice: 'Вопрос удален'
   end
 
+
   private
+
   def authorize_user
     reject_user unless @question.user == current_user
   end
@@ -48,9 +47,28 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
   end
 
-  def load_tag_questions
-    #@tag = '#вопрос'
-    @questions = Question.where("text LIKE '%#{@tag}%' OR answer LIKE '%#{@tag}%' ")
+  def create_tag(question)
+    #массив тегов из текстов вопроса и ответа
+    tag_regexp = /#[[:word:]-]+/
+    hashs = []
+    if question
+      hashs += question.text.scan(tag_regexp) if question.text
+      hashs += question.answer.scan(tag_regexp) if question.answer
+    end
+    hashs.uniq!
+
+    #убираем уже привязанные к вопросу теги
+    hash_existed = question.tags.map(&:name)
+    hashs -= hash_existed
+
+    #привязываем новые теги, если они есть
+    if hashs
+      hashs.each do |tag|
+        t = Tag.find_by(name: tag)
+        t = Tag.create!(name: tag) unless t
+        QuestionTag.create!(tag: t, question: question)
+      end
+    end
   end
 
   def question_params

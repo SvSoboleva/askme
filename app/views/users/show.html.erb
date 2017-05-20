@@ -60,9 +60,7 @@
   <div class="user-questions buffer-both">
     <div class="questions-list">
       <% @questions.each do |question| %>
-          <% questions = [] %>
-          <% questions << question %>
-          <% hashtags(questions) %>
+          <% @tags = question.tags %>
           <%= render partial: 'questions/question', object: question %>
       <% end %>
     </div>

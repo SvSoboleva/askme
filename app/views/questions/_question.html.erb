@@ -14,11 +14,11 @@
         <% end %>
       </div>
       <div class="hashtag-list">
-        <% if @hashtags %>
+        <% if @tags %>
           <ul>
-            <% @hashtags.each do |tag| %>
+            <% @tags.each do |tag| %>
               <li class="hashtag-list-item">
-                <%= link_to "#{tag}", questions_path %> </li>
+                <%= link_to "#{tag.name}", tag_path(tag) %> </li>
             <% end %>
           </ul>
         <% end %>
