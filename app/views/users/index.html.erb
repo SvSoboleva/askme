@@ -20,3 +20,18 @@
   <% end %>
 </div>
 
+<div class="content-wrapper buffer-both text-center">
+<div class="hashtag-list">
+  <% hashtags(@questions) %>
+  <% if @hashtags %>
+      <ul>
+        <% @hashtags.each do |tag| %>
+            <li class="hashtag-list-item">
+
+              <%= link_to "#{tag}", questions_path %> </li>
+        <% end %>
+      </ul>
+  <% end %>
+</div>
+</div>
+

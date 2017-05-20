@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   # Это действие отзывается, когда пользователь заходит по адресу /users
   before_action :load_user, except: [:index, :new, :create]
   before_action :load_questions, only: [:destroy, :show]
+  before_action :load_all_questions, only: [:index]
   before_action :authorize_user, except: [:index, :new, :create, :show]
 
   def index
@@ -59,6 +60,10 @@ class UsersController < ApplicationController
 
   def load_questions
     @questions = @user.questions.order(created_at: :desc)
+  end
+
+  def load_all_questions
+    @questions = Question.all
   end
 
   def user_params

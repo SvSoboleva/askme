@@ -1,0 +1,12 @@
+ <div class="content-wrapper buffer-both">
+   <div class="user-questions buffer-both">
+     <div class="questions-list">
+       <% @questions.each do |question| %>
+         <% questions = [] %>
+         <% questions << question %>
+         <% hashtags(questions) %>
+         <%= render partial: 'questions/question', object: question %>
+         <% end %>
+     </div>
+   </div>
+ </div>

@@ -13,6 +13,16 @@
                       user_path(User.find_by(id: question.author)) %>
         <% end %>
       </div>
+      <div class="hashtag-list">
+        <% if @hashtags %>
+          <ul>
+            <% @hashtags.each do |tag| %>
+              <li class="hashtag-list-item">
+                <%= link_to "#{tag}", questions_path %> </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
     </div>
 
     <%# Текст ответа, если он есть %>

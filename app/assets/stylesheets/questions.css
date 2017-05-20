@@ -46,3 +46,16 @@
 .questions_amount {
   padding-top: 5px;
 }
+
+.hashtag-list {
+  color: blueviolet ;
+}
+
+.hashtag-list-item {
+  list-style: none;
+  padding: 0 5px;
+  margin: 0;
+  display: inline-block;
+  font-style: italic;
+  font-size: 15px;
+}

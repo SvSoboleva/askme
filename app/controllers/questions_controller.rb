@@ -1,6 +1,11 @@
 class QuestionsController < ApplicationController
-  before_action :load_question, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_user, except: [:create]
+  before_action :load_question, only: [:edit, :update, :destroy]
+  before_action :load_tag_questions, only: [:index]
+  before_action :authorize_user, except: [:create, :index]
+
+
+  def index
+  end
 
   # GET /questions/1/edit
   def edit
@@ -41,6 +46,11 @@ class QuestionsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def load_question
     @question = Question.find(params[:id])
+  end
+
+  def load_tag_questions
+    #@tag = '#вопрос'
+    @questions = Question.where("text LIKE '%#{@tag}%' OR answer LIKE '%#{@tag}%' ")
   end
 
   def question_params
