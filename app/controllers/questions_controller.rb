@@ -10,8 +10,8 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
     @question.author = current_user
-    if @question.save
-      create_tag(@question)
+    if check_captcha(@question) && @question.save
+      @question.build_tags
       redirect_to user_path(@question.user), notice: 'Вопрос задан'
     else
       render :edit
@@ -21,7 +21,7 @@ class QuestionsController < ApplicationController
   # PATCH/PUT /questions/1
   def update
     if @question.update(question_params)
-      create_tag(@question)
+    #  create_tag(@question)
       redirect_to user_path(@question.user), notice: 'Вопрос сохранен'
     else
       render :edit
@@ -47,30 +47,6 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
   end
 
-  def create_tag(question)
-    #массив тегов из текстов вопроса и ответа
-    tag_regexp = /#[[:word:]-]+/
-    hashs = []
-    if question
-      hashs += question.text.scan(tag_regexp) if question.text
-      hashs += question.answer.scan(tag_regexp) if question.answer
-    end
-    hashs.uniq!
-
-    #убираем уже привязанные к вопросу теги
-    hash_existed = question.tags.map(&:name)
-    hashs -= hash_existed
-
-    #привязываем новые теги, если они есть
-    if hashs
-      hashs.each do |tag|
-        t = Tag.find_by(name: tag)
-        t = Tag.create!(name: tag) unless t
-        QuestionTag.create!(tag: t, question: question)
-      end
-    end
-  end
-
   def question_params
     # Защита от уязвимости: если текущий пользователь — адресат вопроса,
     # он может менять ответы на вопрос, ему доступно также поле :answer.
@@ -80,5 +56,9 @@ class QuestionsController < ApplicationController
     else
       params.require(:question).permit(:user_id, :text)
     end
+  end
+
+  def check_captcha(model)
+    current_user.present? || verify_recaptcha(model: model)
   end
 end

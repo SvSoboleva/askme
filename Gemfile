@@ -16,6 +16,11 @@ gem 'rails_12factor'
 
 gem 'uglifier'
 
+# Гем для добавления капчи
+# https://github.com/ambethia/recaptcha
+gem 'recaptcha', require: 'recaptcha/rails'
+
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
