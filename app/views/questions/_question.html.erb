@@ -13,16 +13,6 @@
                       user_path(User.find_by(id: question.author)) %>
         <% end %>
       </div>
-      <div class="hashtag-list">
-        <% if @tags %>
-          <ul>
-            <% @tags.each do |tag| %>
-              <li class="hashtag-list-item">
-                <%= link_to "#{tag.name}", tag_path(tag) %> </li>
-            <% end %>
-          </ul>
-        <% end %>
-      </div>
     </div>
 
     <%# Текст ответа, если он есть %>
@@ -31,6 +21,17 @@
           <%= question.answer %>
         </div>
     <% end %>
+
+    <div class="hashtag-list">
+      <% if @tags %>
+        <ul>
+          <% @tags.each do |tag| %>
+            <li class="hashtag-list-item">
+              <%= link_to "#{tag.name}", tag_path(tag) %> </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
 
     <%# Дата создания вопроса (отформатированная) %>
     <div class="question-date">

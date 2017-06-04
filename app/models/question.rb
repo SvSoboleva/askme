@@ -12,31 +12,15 @@ class Question < ApplicationRecord
 
   before_save :build_tags
 
-  def build_tags
-    hashs = hashtags_from_fields
+  private
 
-    #убираем уже привязанные к вопросу теги
-    hash_existed = tags.map(&:name)
-    hashs -= hash_existed if hashs && hash_existed
+  def build_tags
+    question_tags.delete_all
+    hashs = (text + ' ' + answer.to_s).scan(Tag::TAGREGEXP).uniq
 
     #привязываем новые теги, если они есть
-    if hashs
-      hashs.each do |tag_name|
-        tag = Tag.find_or_initialize_by(name: tag_name)
-        question_tags.build(tag: tag)
-      end
+    hashs.each do |tag_name|
+      tags << Tag.find_or_create_by(name: tag_name)
     end
-  end
-
-  def hashtags_from_fields
-    #массив тегов из текстов вопроса и ответа
-    tag_regexp = /#[[:word:]-]+/
-    hashtags_from_text = []
-    hashtags_from_answer = []
-
-    hashtags_from_text = text.scan(tag_regexp) if text
-    hashtags_from_answer = answer.scan(tag_regexp) if answer
-
-    (hashtags_from_text + hashtags_from_answer).uniq
   end
 end
