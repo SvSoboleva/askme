@@ -34,7 +34,6 @@ class QuestionsController < ApplicationController
     redirect_to user_path(user), notice: 'Вопрос удален'
   end
 
-
   private
 
   def authorize_user

@@ -1,24 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+**AskMe**
 
-Things you may want to cover:
+Учебное приложение — вопросы и ответы на rails 5.0.2
 
-* Ruby version
+Рассчитано на работу с Heroku.
 
-* System dependencies
+Предназначено для освоения работы с базами данных, аутентификацией, авторизацией, 
+освоение основ безопасности приложений - гем recaptcha, обработка хэштегов. 
 
-* Configuration
+Учит также основам работы с локализацией и YML файлами.
 
-* Database creation
+**Демо**
 
-* Database initialization
+https://askthem.herokuapp.com/
 
-* How to run the test suite
+**Установка**
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Для разворачивания своей копии клонируйте гит репозиторий , залейте на свое приложение на Heroku 
+(или создайте новое heroku create). 

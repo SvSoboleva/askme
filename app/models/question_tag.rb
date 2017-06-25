@@ -4,5 +4,4 @@ class QuestionTag < ApplicationRecord
 
   validates :question, presence: true
   validates :tag, presence: true
-
 end

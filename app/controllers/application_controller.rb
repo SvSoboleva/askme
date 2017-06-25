@@ -12,6 +12,4 @@ class ApplicationController < ActionController::Base
   def reject_user
     redirect_to root_path, alert: 'Нет доступа'
   end
-
-
 end
